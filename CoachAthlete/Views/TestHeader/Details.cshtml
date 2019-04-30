@@ -1,0 +1,35 @@
+﻿@model CoachAthlete.Entities.TestHeader
+
+@{
+    ViewData["Title"] = "Details";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h1>Details</h1>
+
+<div>
+    <h4>TestHeader</h4>
+    <hr />
+    <div class="container">
+        <a asp-area="" asp-controller="TestDetail" asp-action="Create">Add New Athlete</a>
+    </div>
+    <hr />
+    <dl class="row">
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.TestDate)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.TestDate)
+        </dd>
+        <dt class="col-sm-2">
+            @Html.DisplayNameFor(model => model.TestType)
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.TestType)
+        </dd>
+    </dl>
+</div>
+<div>
+    <a asp-action="Edit" asp-route-id="@Model.TestHeaderId">Edit</a> |
+    <a asp-action="Index">Back to List</a>
+</div>

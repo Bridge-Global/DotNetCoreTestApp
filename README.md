@@ -1,2 +1,2 @@
-# DotNetCoreTestApp
-DotNetCoreTestApp
+# DotNetTestApp
+DotNetTestApp

@@ -1,0 +1,54 @@
+﻿@model IEnumerable<CoachAthlete.Entities.TestHeader>
+
+@{
+    ViewData["Title"] = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h1>Main Page</h1>
+
+<p>
+    <a asp-action="Create">Create New Test</a>
+</p>
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.TestHeaderId)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.TestDate)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.TestType)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.NoOfParticipants);
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model) {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.TestHeaderId)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.TestDate)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.TestType)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.NoOfParticipants)
+            </td>
+            <td>
+                <a asp-action="Edit" asp-route-id="@item.TestHeaderId">Edit</a> |
+                <a asp-controller="TestDetail" asp-action="Index" asp-route-id="@item.TestHeaderId">Details</a> |
+                <a asp-action="Delete" asp-route-id="@item.TestHeaderId">Delete</a>
+            </td>
+        </tr>
+}
+    </tbody>
+</table>
