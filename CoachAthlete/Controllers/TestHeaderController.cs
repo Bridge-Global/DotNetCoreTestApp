@@ -27,7 +27,7 @@ namespace CoachAthlete.Controllers
         {
             System.Security.Claims.ClaimsPrincipal currentUser = this.User;
             return View(await _context.TestHeaders
-                .Select(x => new TestHeader()
+                .Select(x => new TestHeaderViewModel()
                 {
                     TestHeaderId = x.TestHeaderId,
                     TestDate = x.TestDate,
@@ -70,7 +70,7 @@ namespace CoachAthlete.Controllers
         [HttpPost]
         [ValidateAntiForgeryToken]
         [Authorize(Roles = "Coach")]
-        public async Task<IActionResult> Create([Bind("TestHeaderId,TestDate,TestType")] TestHeader testHeader)
+        public async Task<IActionResult> Create([Bind("TestHeaderId,TestDate,TestType")] TestHeaderViewModel testHeader)
         {
             if (ModelState.IsValid)
             {
@@ -108,7 +108,7 @@ namespace CoachAthlete.Controllers
         [Authorize(Roles = "Coach")]
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("TestHeaderId,TestDate,TestType")] TestHeader testHeader)
+        public async Task<IActionResult> Edit(int id, [Bind("TestHeaderId,TestDate,TestType")] TestHeaderViewModel testHeader)
         {
             if (id != testHeader.TestHeaderId)
             {

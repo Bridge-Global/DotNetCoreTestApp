@@ -5,9 +5,9 @@ using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Identity;
 
-namespace CoachAthlete.Entities
+namespace CoachAthlete.Data.Entities
 {
-    public class TestDetail
+    public class TestDetailEntity
     {
         [Key]
         public  long SlNo {get; set;}

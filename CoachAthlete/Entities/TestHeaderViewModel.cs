@@ -1,19 +1,12 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using Microsoft.EntityFrameworkCore.Metadata.Internal;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
+using CoachAthlete.Core.Enum;
 
 namespace CoachAthlete.Entities
 {
-    public enum TestType
-    {
-        CooperTest,
-        SprintTest
-    }
-    public class TestHeader
+    public class TestHeaderViewModel
     {
         [Key]
         public int TestHeaderId { get; set; }
@@ -21,6 +14,6 @@ namespace CoachAthlete.Entities
         public TestType TestType { get; set; }
         [NotMapped]
         public string NoOfParticipants { get; set; }
-        public ICollection<TestDetail>  TestDetails { get; set; }
+        public ICollection<TestDetailViewModel>  TestDetails { get; set; }
     }
 }
