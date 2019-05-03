@@ -10,7 +10,7 @@ namespace CoachAthlete.Data
     public class ApplicationDbContext : IdentityDbContext
     {
         public DbSet<TestHeaderViewModel> TestHeaders { get; set; }
-        public DbSet<TestDetail> TestDetails { get; set; }
+        public DbSet<TestDetailViewModel> TestDetails { get; set; }
 
         public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options): base(options)
         {

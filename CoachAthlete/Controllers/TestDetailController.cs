@@ -6,6 +6,8 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using System.Linq;
 using System.Threading.Tasks;
+using CoachAthlete.Core.Enum;
+using CoachAthlete.Data.Entities;
 using Microsoft.AspNetCore.Authorization;
 
 namespace CoachAthlete.Controllers
@@ -34,10 +36,24 @@ namespace CoachAthlete.Controllers
             {
                 TempData["selectedHeaderId"] = id;
             }
-    
 
-            var applicationDbContext = _context.TestDetails.Include(t => t.TestHeader)
-                                        .Where(x => x.TestHeaderId == id);
+
+            var applicationDbContext = _context.TestDetails
+                .Include(t => t.TestHeader)
+                .Include(t => t.Athlete)
+                .OrderByDescending(t => t.DistanceOrTime)
+                .Where(x => x.TestHeaderId == id)
+                .Select(x => new TestDetailEntity()
+                {
+                    TestHeaderId = x.TestHeaderId,
+                    SlNo = x.SlNo,
+                    TestHeader = x.TestHeader,
+                    DistanceOrTime = x.DistanceOrTime,
+                    Athlete = x.Athlete,
+                    AthleteId = x.AthleteId,
+                    FitnessRating = x.DistanceOrTime <= 1000 ? FitnessRating.BelowAverage : x.DistanceOrTime <= 2000 ? FitnessRating.Average : x.DistanceOrTime <= 3500 ? FitnessRating.Good : FitnessRating.VeryGood
+                });
+
             return View(await applicationDbContext.ToListAsync());
         }
 
@@ -76,13 +92,16 @@ namespace CoachAthlete.Controllers
         [HttpPost]
         [ValidateAntiForgeryToken]
         [Authorize(Roles = "Coach")]
-        public async Task<IActionResult> Create([Bind("SlNo,DistanceOrTime,TestHeaderId,Athlete")] TestDetail testDetail)
+        public async Task<IActionResult> Create([Bind("SlNo,DistanceOrTime,TestHeaderId,AthleteId")] TestDetailEntity testDetail)
         {
             if (ModelState.IsValid)
             {
+                TempData["selectedHeaderId"] = testDetail.TestHeaderId;
                 _context.Add(testDetail);
                 await _context.SaveChangesAsync();
-                return RedirectToAction(nameof(Index));
+                //return RedirectToAction(nameof(Index));
+                return RedirectToAction(nameof(Index), "TestDetail", new {id = testDetail.TestHeaderId});
+                //return RedirectToAction(nameof(Index), "TestDetailController ", new { id = testDetail.TestHeaderId });
             }
             ViewData["TestHeaderId"] = new SelectList(_context.TestHeaders.Select(x => new { x.TestHeaderId, TestName = $"{x.TestType} - {x.TestDate.ToString("yyyy-MMM-dd")}" }), "TestHeaderId", "TestName", testDetail.TestHeaderId);
             ViewData["userID"] = new SelectList(_context.Users, "Id", "UserName", testDetail.Athlete);
@@ -104,6 +123,11 @@ namespace CoachAthlete.Controllers
             {
                 return NotFound();
             }
+            else
+            {
+                TempData["selectedHeaderId"] = testDtl.TestHeaderId;
+            }
+
             ViewData["TestHeaderId"] = new SelectList(_context.TestHeaders.Select(x=>new {x.TestHeaderId, TestName = $"{x.TestType} - {x.TestDate.ToString("yyyy-MMM-dd")}"}), "TestHeaderId", "TestName", testDtl.TestHeaderId);
             ViewData["userID"] = new SelectList(_context.Users, "Id", "UserName", testDtl.Athlete);
             return View(testDtl);
@@ -115,7 +139,7 @@ namespace CoachAthlete.Controllers
         [HttpPost]
         [ValidateAntiForgeryToken]
         [Authorize(Roles = "Coach")]
-        public async Task<IActionResult> Edit(long id, [Bind("SlNo,DistanceOrTime,TestHeaderId,Athlete")] TestDetail testDetail)
+        public async Task<IActionResult> Edit(long id, [Bind("SlNo,DistanceOrTime,TestHeaderId,AthleteId")] TestDetailEntity testDetail)
         {
             if (id != testDetail.SlNo)
             {

@@ -9,8 +9,7 @@ using CoachAthlete.Core.Enum;
 
 namespace CoachAthlete.Data.Entities
 {
-    // attribute to specify table name
-    [name]
+    [Table("TestHeader")]
     public class TestHeaderEntity
     {
         [Key]

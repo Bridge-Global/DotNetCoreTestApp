@@ -1,4 +1,4 @@
-﻿@model IEnumerable<CoachAthlete.Entities.TestDetail>
+﻿@model IEnumerable<CoachAthlete.Data.Entities.TestDetailEntity>
 
 @{
     ViewData["Title"] = "Index";
@@ -14,13 +14,16 @@
     <thead>
         <tr>
             <th>
+                @Html.DisplayNameFor(model => model.Athlete)
+            </th>
+            <th>
                 @Html.DisplayNameFor(model => model.DistanceOrTime)
             </th>
             <th>
                 @Html.DisplayNameFor(model => model.TestHeaderId)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.Athlete)
+                @Html.DisplayNameFor(model => model.FitnessRating)
             </th>
         </tr>
     </thead>
@@ -28,13 +31,16 @@
 @foreach (var item in Model) {
         <tr>
             <td>
+                @Html.DisplayFor(modelItem => item.Athlete.UserName)
+            </td>
+            <td>
                 @Html.DisplayFor(modelItem => item.DistanceOrTime)
             </td>
             <td>
                 @Html.DisplayFor(modelItem => item.TestHeader.TestHeaderId)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.Athlete.UserName)
+                @Html.DisplayFor(modelItem => item.FitnessRating)
             </td>
             <td>
                 <a asp-action="Edit" asp-route-id="@item.SlNo">Edit</a> |

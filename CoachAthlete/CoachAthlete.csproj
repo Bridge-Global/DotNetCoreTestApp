@@ -7,8 +7,14 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Compile Remove="Data\Migrations\20190430064047_Saifu.cs" />
-    <Compile Remove="Data\Migrations\20190430064047_Saifu.Designer.cs" />
+    <Compile Remove="Data\**" />
+    <Compile Remove="Entities\**" />
+    <Content Remove="Data\**" />
+    <Content Remove="Entities\**" />
+    <EmbeddedResource Remove="Data\**" />
+    <EmbeddedResource Remove="Entities\**" />
+    <None Remove="Data\**" />
+    <None Remove="Entities\**" />
   </ItemGroup>
 
 
@@ -23,6 +29,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\CoachAthlete.Core\CoachAthlete.Core.csproj" />
+    <ProjectReference Include="..\CoachAthlete.Data\CoachAthlete.Data.csproj" />
   </ItemGroup>
 
 </Project>

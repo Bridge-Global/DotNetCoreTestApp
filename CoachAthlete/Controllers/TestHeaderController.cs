@@ -5,6 +5,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using System.Linq;
 using System.Threading.Tasks;
+using CoachAthlete.Data.Entities;
 using Microsoft.AspNetCore.Authorization;
 using Remotion.Linq.Clauses;
 
@@ -27,7 +28,7 @@ namespace CoachAthlete.Controllers
         {
             System.Security.Claims.ClaimsPrincipal currentUser = this.User;
             return View(await _context.TestHeaders
-                .Select(x => new TestHeaderViewModel()
+                .Select(x => new TestHeaderEntity()
                 {
                     TestHeaderId = x.TestHeaderId,
                     TestDate = x.TestDate,
@@ -70,7 +71,7 @@ namespace CoachAthlete.Controllers
         [HttpPost]
         [ValidateAntiForgeryToken]
         [Authorize(Roles = "Coach")]
-        public async Task<IActionResult> Create([Bind("TestHeaderId,TestDate,TestType")] TestHeaderViewModel testHeader)
+        public async Task<IActionResult> Create([Bind("TestHeaderId,TestDate,TestType")] TestHeaderEntity testHeader)
         {
             if (ModelState.IsValid)
             {
@@ -108,7 +109,7 @@ namespace CoachAthlete.Controllers
         [Authorize(Roles = "Coach")]
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("TestHeaderId,TestDate,TestType")] TestHeaderViewModel testHeader)
+        public async Task<IActionResult> Edit(int id, [Bind("TestHeaderId,TestDate,TestType")] TestHeaderEntity testHeader)
         {
             if (id != testHeader.TestHeaderId)
             {
